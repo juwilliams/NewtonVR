@@ -31,6 +31,12 @@ namespace NewtonVR
 
         protected float CurrentDistance = -1;
 
+        private Vector3 InitialLocalPosition;
+        private Vector3 ConstrainedPosition;
+
+        private Quaternion InitialLocalRotation;
+        private Quaternion ConstrainedRotation;
+
         private void Awake()
         {
             InitialPosition = new GameObject(string.Format("[{0}] Initial Position", this.gameObject.name)).transform;
@@ -45,17 +51,22 @@ namespace NewtonVR
             {
                 Debug.LogError("There is no rigidbody attached to this button.");
             }
+
+            InitialLocalPosition = this.transform.localPosition;
+            ConstrainedPosition = InitialLocalPosition;
+
+            InitialLocalRotation = this.transform.localRotation;
+            ConstrainedRotation = this.transform.localRotation;
         }
 
         private void FixedUpdate()
         {
+            ConstrainPosition();
+
             CurrentDistance = Vector3.Distance(this.transform.position, InitialPosition.position);
 
-            if (CurrentDistance > MinDistance)
-            {
-                Vector3 PositionDelta = InitialPosition.position - this.transform.position;
-                this.Rigidbody.velocity = PositionDelta * PositionMagic * Time.fixedDeltaTime;
-            }
+            Vector3 PositionDelta = InitialPosition.position - this.transform.position;
+            this.Rigidbody.velocity = PositionDelta * PositionMagic * Time.fixedDeltaTime;
         }
 
         private void Update()
@@ -72,6 +83,18 @@ namespace NewtonVR
                 ButtonUp = true;
             else
                 ButtonUp = false;
+        }
+
+        private void ConstrainPosition()
+        {
+            ConstrainedPosition.y = this.transform.localPosition.y;
+            this.transform.localPosition = ConstrainedPosition;
+            this.transform.localRotation = ConstrainedRotation;
+        }
+
+        private void LateUpdate()
+        {
+            ConstrainPosition();
         }
     }
 }
