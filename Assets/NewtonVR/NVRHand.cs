@@ -53,7 +53,7 @@ namespace NewtonVR
         private int EstimationSamples = 5;
         private int RotationEstimationSamples = 10;
 
-        private NVRPhysicalController PhysicalController;
+        protected NVRPhysicalController PhysicalController;
 
         private Collider[] GhostColliders;
         private Renderer[] GhostRenderers;

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class RPDMPlayer : NewtonVR.NVRPlayer {
 
-    //public static RPDMPlayer Instance;
+    public RPDMInventory Inventory;
 
-	// Use this for initialization
-	void Start () {
-        //Instance = this;
+    // Use this for initialization
+    void Start () {
+        this.Inventory = this.GetComponent<RPDMInventory>();
     }
 	
 	// Update is called once per frame
