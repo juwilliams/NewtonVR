@@ -16,7 +16,7 @@ namespace NewtonVR.Example
         {
             Line = this.GetComponent<LineRenderer>();
             Hand = this.GetComponent<NVRHand>();
-
+            
             if (Line == null)
             {
                 Line = this.gameObject.AddComponent<LineRenderer>();
